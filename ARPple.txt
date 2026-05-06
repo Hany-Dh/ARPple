@@ -8,7 +8,6 @@ On Windows, run `ping google.com`. It should succeed.
 If both VMs can reach the internet and can ping each other, you are ready.
 
 
-
 sudo sysctl -w net.ipv4.ip_forward=1
 
 
